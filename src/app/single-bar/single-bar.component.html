@@ -1,0 +1,16 @@
+<div class="w-100 d-flex align-items-center position-relative pl-3"
+     [style.height.px]="height">
+
+    <div class="rounded-pill"
+         style="transition: width 1000ms linear; opacity: 0.3"
+         [style.height.px]="height - 12"
+         [style.width]="'calc((100% - 170px) * ' + width + ' / 100)'"
+         [style.background]="conf.color">
+    </div>
+
+    <div class="ml-3"
+         [style.min-width.px]="170">
+        <span class="d-inline-block mr-2">{{conf.label}}</span><span class="text-muted">{{conf.number | number}}</span>
+    </div>
+
+</div>

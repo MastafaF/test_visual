@@ -123,6 +123,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "masta-le-js"
+    }
+  },
+  "defaultProject": "masta-le-js",
+  "cli": {
+    "analytics": false
+  }
 }
