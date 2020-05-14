@@ -6,8 +6,8 @@ export const DEFAULT_DATA: { [key: string]: SingleBarConf[] } = {
             label: 'Rihanna',
             number: 5987346,
             color: '#00FFFF',
-            ranking: 3,
-            purcents: 18
+            ranking: 3, // position in the ranking 
+            purcents: 18 // relative to best which is 100%
         }
     ],
     Coldplay: [

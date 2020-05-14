@@ -57,5 +57,5 @@ export class AppComponent implements OnInit {
   trackByFn(i, o) {
     return o.label;
   }
-
+    
 }
