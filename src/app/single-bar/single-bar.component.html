@@ -4,7 +4,7 @@
     <div class="rounded-pill"
          style="transition: width 1000ms linear; opacity: 0.3"
          [style.height.px]="height - 12"
-         [style.width]="'calc((100% - 170px) * ' + width + ' / 100)'"
+         [style.width]="'calc((100% - 170px) * ' + width + ' / 100)' | safe:'style'"
          [style.background]="conf.color">
     </div>
 
