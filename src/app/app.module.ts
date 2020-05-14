@@ -4,6 +4,7 @@ import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
 import { SingleBarComponent } from './single-bar/single-bar.component';
 import { SafePipeModule } from 'safe-pipe';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -11,8 +12,10 @@ import { SafePipeModule } from 'safe-pipe';
     SingleBarComponent
   ],
   imports: [
-    BrowserModule, 
-    SafePipeModule
+    BrowserModule,
+    HttpClientModule,
+
+    SafePipeModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

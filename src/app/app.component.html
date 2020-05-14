@@ -9,18 +9,21 @@
           (click)="pause()">Pause</button>
 </div>
 
-<div class="position-relative overflow-hidden"
+<div *ngIf="data"
+     class="position-relative overflow-hidden"
      [style.height.px]="barsNumber * height">
 
   <ng-container *ngFor="let entry of data | keyvalue; trackBy: trackByFn">
-    <ng-container *ngIf="entry.value[time] as instant">
+    <ng-container *ngIf="entry.value.timeserie[time] as instant">
 
       <div class="w-100"
            style="position: absolute; top: 0; left:0; transition: transform 1000ms ease"
            [style.z-index]="11 - instant.ranking"
            [style.transform]="'translateY(' + instant.ranking * height + 'px)'">
 
-        <app-single-bar [conf]="instant"
+        <app-single-bar [label]="entry.value.label"
+                        [color]="entry.value.color"
+                        [conf]="instant"
                         [height]="height"
                         [width]="instant.purcents"></app-single-bar>
 

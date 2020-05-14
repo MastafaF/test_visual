@@ -1,9 +1,12 @@
 import { Component, OnInit } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+
 import { SingleBarConf } from './models/single-bar.model';
 import { interval, Subscription } from 'rxjs';
 
-import { DEFAULT_DATA } from './data/default';
-import { GENERATED_DATA } from './data/generated';
+import { generator } from './data/generator';
+
+import { tap, map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-root',
@@ -13,25 +16,41 @@ import { GENERATED_DATA } from './data/generated';
 export class AppComponent implements OnInit {
 
   // you have to set
-  data: { [key: string]: SingleBarConf[] } = DEFAULT_DATA; // replace with GENERATED_DATA
+  data: {
+    [key: string]: {
+      label: string,
+      color: string,
+      timeserie: SingleBarConf[]
+    }
+  };
 
   // you can change
-  barsNumber = 4;
+  barsNumber = 20;
   height = 32;
-  intervalDuration = 1000;
+  intervalDuration = 1200;
 
   // do not touch
   time = 0;
   interval: Subscription;
 
+  constructor(private http: HttpClient) { }
+
   ngOnInit() {
+    this.http.get('assets/src.tsv', { responseType: 'text' })
+      .pipe(
+        map(generator),
+        tap(console.log),
+      )
+      .subscribe(data => {
+        this.data = data;
+      });
   }
 
   start() {
-    const timeEnd = Object.values(this.data)[0].length;
+    const timeEnd = Object.values(this.data)[0].timeserie.length;
 
     this.interval = interval(this.intervalDuration).subscribe(() => {
-      if (this.time === timeEnd - 1) {
+      if (this.time === timeEnd - 2) {
         this.interval.unsubscribe();
         return;
       }
@@ -57,5 +76,5 @@ export class AppComponent implements OnInit {
   trackByFn(i, o) {
     return o.label;
   }
-    
+
 }

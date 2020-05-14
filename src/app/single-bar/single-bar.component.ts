@@ -9,6 +9,9 @@ import { SingleBarConf } from '../models/single-bar.model';
 })
 export class SingleBarComponent {
 
+  @Input() label: string;
+  @Input() color = '#888';
+
   @Input() height: number;
   @Input() width: number;
 
