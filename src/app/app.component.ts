@@ -8,22 +8,6 @@ import { generator } from './data/generator';
 
 import { tap, map } from 'rxjs/operators';
 
-
-/**
- * @title Radios with ngModel
- */
-@Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss'],
-})
-export class RadioNgModelExample {
-  favoriteSeason: string;
-  seasons: string[] = ['Winter', 'Spring', 'Summer', 'Autumn'];
-}
-
-
-
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
