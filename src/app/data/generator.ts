@@ -8,7 +8,16 @@ const STOP_WORDS = ['les', 'pour', 'une', 'des', 'dans', 'sur', 'plus', 'que', '
 
 // issue when PERIOD = 'year' 
 // @TODO: solve it 
-var PERIOD = 'month';
+// In the future, the user specify the period PERIOD
+// var PERIOD = 'year';
+var oneDay = 24 * 60 * 60 * 1000; // hours * minutes * seconds
+const PERIOD_DURATION = {
+day: oneDay, 
+week: 7*oneDay, 
+month: 30*oneDay,
+year: 365*oneDay                  
+}
+
 
 const getDate = (str: string): Date => {
     const split = str.slice(1, -1).split(', ');
@@ -47,7 +56,7 @@ var groupByTimePeriod = function (obj, timestamp, period) {
 };
 
 
-export const generator = (tsv: string) => {
+export const generator = (tsv: string, period: string) => {
 
     const rows: any[] = tsv
         .split('\n')
@@ -61,26 +70,27 @@ export const generator = (tsv: string) => {
         });
 
     const groupedRows = _.groupBy(rows, e => {
-       if (PERIOD == "year"){
-         var d = e.date.getFullYear();
-        return d;
-        }
-        if (PERIOD == "month"){
-         var d = (e.date.getFullYear() - 1970) * 12 + e.date.getMonth();
-        return d;
-        }
-        var oneDay = 24 * 60 * 60 * 1000; // hours * minutes * seconds * milliseconds
-        if (PERIOD == "week"){
-          var period = 7*oneDay;
-          return Math.floor(e.date.getTime() / period);
-        }
-        if (PERIOD == "day"){
-          var period = oneDay; 
-          return Math.floor(e.date.getTime() / period);
-        }
-        else {
-          console.log('groupByTimePeriod: You have to set a period! day | week | month | year');
-        }
+        return Math.floor(e.date.getTime() / PERIOD_DURATION[period]);
+      //  if (PERIOD == "year"){
+      //    var d = e.date.getFullYear();
+      //   return d;
+      //   }
+      //   if (PERIOD == "month"){
+      //    var d = (e.date.getFullYear() - 1970) * 12 + e.date.getMonth();
+      //   return d;
+      //   }
+      //   var oneDay = 24 * 60 * 60 * 1000; // hours * minutes * seconds * milliseconds
+      //   if (PERIOD == "week"){
+      //     var period = 7*oneDay;
+      //     return Math.floor(e.date.getTime() / period);
+      //   }
+      //   if (PERIOD == "day"){
+      //     var period = oneDay; 
+      //     return Math.floor(e.date.getTime() / period);
+      //   }
+      //   else {
+      //     console.log('groupByTimePeriod: You have to set a period! day | week | month | year');
+      //   }
     });
 
     const dictionnary = {};
@@ -127,7 +137,6 @@ export const generator = (tsv: string) => {
     const allWords = Object.keys(dictionnary);
 
     for (const date of dates) {
-
         const topCount = groupedRows[date].__max;
         const unrankedWords = [];
 

@@ -25,6 +25,8 @@ export class AppComponent implements OnInit {
   };
 
   // you can change
+  periodSelected = 'day';
+  periods = ['year', 'month', 'week', 'day']; 
   barsNumber = 40;
   height = 32;
   intervalDuration = 1200;
@@ -35,10 +37,11 @@ export class AppComponent implements OnInit {
 
   constructor(private http: HttpClient) { }
 
+  // Initialize the app 
   ngOnInit() {
     this.http.get('assets/src.tsv', { responseType: 'text' })
       .pipe(
-        map(generator),
+        map(e => generator(e, this.periodSelected)),
         tap(console.log),
       )
       .subscribe(data => {
@@ -50,12 +53,13 @@ export class AppComponent implements OnInit {
     const timeEnd = Object.values(this.data)[0].timeserie.length;
 
     this.interval = interval(this.intervalDuration).subscribe(() => {
-      if (this.time === timeEnd - 2) {
+      if (this.time === timeEnd - 2 || this.time === timeEnd - 1) {
         this.interval.unsubscribe();
+        // this.interval = null ;
         return;
       }
-
       this.time += 1;
+
     });
   }
 
@@ -75,6 +79,14 @@ export class AppComponent implements OnInit {
 
   trackByFn(i, o) {
     return o.label;
+  }
+
+
+  changePeriod(period: string){
+    this.periodSelected = period; 
+    this.pause();
+    this.time = 0; 
+    this.ngOnInit(); 
   }
 
 }
