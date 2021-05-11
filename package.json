@@ -19,7 +19,7 @@
     "@angular/platform-browser": "9.1.4",
     "@angular/platform-browser-dynamic": "^9.1.7",
     "@angular/router": "9.1.4",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.21",
     "rxjs": "6.5.5",
     "safe-pipe": "^1.0.3",
     "tslib": "1.11.2",
